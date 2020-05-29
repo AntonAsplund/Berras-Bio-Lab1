@@ -1,0 +1,53 @@
+﻿@model Berras_Bio_Lab1.Models.TicketModel
+
+@{
+    ViewData["Title"] = "Order Ticket";
+}
+
+<h1>Receipt</h1>
+
+<div>
+    <h4>Thank you for your purchase!</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            <!---Order timestamp:-->
+        </dt>
+        <dd class="col-sm-10">
+            @Model.OrderDateTime.ToString("yyyy-MM-dd HH:mm:ss")
+        </dd>
+        <dt class="col-sm-2">
+            Booking number:
+        </dt>
+        <dd class="col-sm-10">
+            #@Model.TicketModelId
+        </dd>
+        <dt class="col-sm-2">
+            <br>
+            Number of tickets:
+        </dt>
+        <dd class="col-sm-10">
+            <br>
+            @Html.DisplayFor(model => model.NumberOfViewingTickets)
+        </dd>
+        <dt class="col-sm-2">
+            Movie:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Viewing.Movie.Name)
+        </dd>
+        <dt class="col-sm-2">
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Viewing.Theater.Name)
+        </dd>
+        <dt class="col-sm-2">
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Viewing.StartTime.ToString("dddd, dd MMMM HH:mm")
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="text-black-50 btn btn-outline-danger" asp-controller="Viewing" asp-action="Index">Back to List</a>
+</div>

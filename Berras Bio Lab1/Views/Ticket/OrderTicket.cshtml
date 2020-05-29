@@ -1,0 +1,90 @@
+﻿
+
+
+@model Berras_Bio_Lab1.Models.TicketModel
+
+@{
+    ViewData["Title"] = "OrderTicket";
+    ViewData["TicketModelId"] = Model.TicketModelId;
+}
+
+<h1>@Html.DisplayFor(model => model.Viewing.Movie.Name)</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Viewing.Movie):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Viewing.Movie.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Start time:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Viewing.StartTime)
+        </dd>
+        <dt class="col-sm-2">
+            Avaible seats:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Viewing.AvaibleSeats) of @Html.DisplayFor(model => model.Viewing.TotalSeats)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Viewing.Theater):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Viewing.Theater.Name)
+        </dd>
+
+        <dt class="col-sm-2">
+            Run time:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Viewing.Movie.RunTime) minutes
+        </dd>
+    </dl>
+</div>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="OrderTicketValidation">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NumberOfViewingTickets" class="control-label">Enter number of desired tickets:</label>
+                <input asp-for="NumberOfViewingTickets" class="form-control" />
+                <span asp-validation-for="NumberOfViewingTickets" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PersonName" class="control-label">Enter number of desired tickets:</label>
+                <input asp-for="PersonName" class="form-control" />
+                <span asp-validation-for="PersonName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label">Enter number of desired tickets:</label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="TicketModelId" value="@ViewData["TicketModelId"]" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Book ticket(s)" class="btn btn-primary" />
+                @if ((string)TempData["TicketLimitation"] != null)
+                {
+                    <div class="gray-box-warning">
+                        @TempData["TicketLimitation"]
+                    </div>
+                }
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="text-black-50 btn btn-outline-danger" asp-controller="Viewing" asp-action="Index">Back to List</a>
+</div>

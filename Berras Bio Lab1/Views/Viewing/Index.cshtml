@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Berras_Bio_Lab1.Models.ViewingModel>
+
+@{
+    ViewData["Title"] = "Todays viewings";
+
+}
+
+<h1>Today's viewings:</h1>
+
+<form asp-action="Index">
+    <div class="padding-1">
+        Sort by:
+        <input type="submit" name="SortButton" value="Start time" class="btn btn-info btn-sm" /> |
+        <input type="submit" name="SortButton" value="Avaible seats" class="btn btn-info btn-sm" />
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Start time:
+            </th>
+            <th>
+                Avaible seats:
+            </th>
+            <th>
+                Theater:
+            </th>
+            <th>
+                Movie:
+            </th>
+            <th>
+                Buttons:
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+
+
+    var noSeatsLeftStyle = "background-color: rgb(128, 128, 128, 0.8);";
+    if (item.AvaibleSeats == 0) { noSeatsLeftStyle = "background-color: #E54C4C;"; }
+
+        <tr style="@noSeatsLeftStyle">
+            <td>
+                @item.StartTime.ToString("dd MMMM HH:mm")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvaibleSeats) of  @Html.DisplayFor(modelItem => item.TotalSeats) seats
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Theater.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Movie.Name)
+            </td>
+            <td>
+                <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@item.ViewingModelId">Details</a> 
+                <a class="btn btn-info btn-sm" asp-controller="Ticket" asp-action="OrderTicket" asp-route-id="@item.ViewingModelId">Book tickets</a>
+            </td>
+
+        </tr>
+
+}
+    </tbody>
+    
+</table>
