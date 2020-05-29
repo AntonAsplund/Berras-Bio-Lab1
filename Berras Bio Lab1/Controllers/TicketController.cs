@@ -39,6 +39,8 @@ namespace Berras_Bio_Lab1.Controllers
 
             viewingModel.Theater = await _context.Theaters.FirstOrDefaultAsync(t => t.TheaterModelId == viewingModel.TheaterModelId);
 
+            //Quickfix to be able to send a ticketmodel to view, personname and phonenumber is required //TO:DO fix call via attributes.
+
             var ticket = new TicketModel
             {
                 Viewing = viewingModel,
