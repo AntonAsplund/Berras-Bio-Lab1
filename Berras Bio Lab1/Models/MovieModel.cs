@@ -16,6 +16,7 @@ namespace Berras_Bio_Lab1.Models
         public int RunTime { get; set; }
         [Required]
         public string Category { get; set; }
+        public string Description { get; set; }
         public ICollection<ViewingModel> viewings { get; set; }
     }
 }

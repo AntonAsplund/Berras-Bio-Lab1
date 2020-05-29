@@ -1,45 +1,42 @@
 ﻿@model Berras_Bio_Lab1.Models.ViewingModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Edit</h1>
+<h1>Create</h1>
 
 <h4>ViewingModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Create756Aa">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ViewingModelId" />
             <div class="form-group">
-                <label asp-for="StartTime" class="control-label"></label>
+                <label asp-for="StartTime" class="control-label">Start Time:</label>
                 <input asp-for="StartTime" class="form-control" />
                 <span asp-validation-for="StartTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AvaibleSeats" class="control-label"></label>
+                <label asp-for="AvaibleSeats" class="control-label">Avaible Seats:</label>
                 <input asp-for="AvaibleSeats" class="form-control" />
                 <span asp-validation-for="AvaibleSeats" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TotalSeats" class="control-label"></label>
+                <label asp-for="TotalSeats" class="control-label">Total number of seats:</label>
                 <input asp-for="TotalSeats" class="form-control" />
                 <span asp-validation-for="TotalSeats" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TheaterModelId" class="control-label"></label>
-                <select asp-for="TheaterModelId" class="form-control" asp-items="ViewBag.TheaterModelId"></select>
-                <span asp-validation-for="TheaterModelId" class="text-danger"></span>
+                <label asp-for="TheaterModelId" class="control-label">Theater:</label>
+                <select asp-for="TheaterModelId" class ="form-control" asp-items="ViewBag.TheaterModelId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="MovieModelId" class="control-label"></label>
-                <select asp-for="MovieModelId" class="form-control" asp-items="ViewBag.MovieModelId"></select>
-                <span asp-validation-for="MovieModelId" class="text-danger"></span>
+                <label asp-for="MovieModelId" class="control-label">Movie:</label>
+                <select asp-for="MovieModelId" class ="form-control" asp-items="ViewBag.MovieModelId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>

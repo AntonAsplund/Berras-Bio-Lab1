@@ -28,14 +28,8 @@ namespace Berras_Bio_Lab1.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
         [Route("{*url}", Order = 999)]
-        public IActionResult CatchAll()
+        public IActionResult Error()
         {
             Response.StatusCode = 404;
             return View();

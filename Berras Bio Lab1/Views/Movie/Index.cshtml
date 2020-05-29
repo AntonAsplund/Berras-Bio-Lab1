@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Berras_Bio_Lab1.Models.MovieModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Our movie archive</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Movie ID
+            </th>
+            <th>
+                Name:
+            </th>
+            <th>
+                Runtime:
+            </th>
+            <th>
+                Category:
+            </th>
+            <th>
+                Description:
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MovieModelId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RunTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

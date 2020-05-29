@@ -46,15 +46,6 @@ namespace Berras_Bio_Lab1.Controllers
 
             return View(berrasBioDbContextList);
         }
-        //Implementera sortering genom att lägga till action som tar emot en string, beroende på vad de ger så sorteras listan efter det. Sätt som A tag.
-
-
-
-
-
-
-
-
 
 
         // GET: Viewing/Details/5
@@ -69,6 +60,7 @@ namespace Berras_Bio_Lab1.Controllers
                 .Include(v => v.Movie)
                 .Include(v => v.Theater)
                 .FirstOrDefaultAsync(m => m.ViewingModelId == id);
+
             if (viewingModel == null)
             {
                 return NotFound();
@@ -77,20 +69,20 @@ namespace Berras_Bio_Lab1.Controllers
             return View(viewingModel);
         }
 
-        // GET: Viewing/Create
-        public IActionResult Create()
+        // GET: Viewing/Create756Aa
+        public IActionResult Create756Aa()
         {
             ViewData["MovieModelId"] = new SelectList(_context.Movies, "MovieModelId", "Name");
             ViewData["TheaterModelId"] = new SelectList(_context.Theaters, "TheaterModelId", "Name");
             return View();
         }
 
-        // POST: Viewing/Create
+        // POST: Viewing/Create756Aa
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ViewingModelId,StartTime,AvaibleSeats,TotalSeats,TheaterModelId,MovieModelId")] ViewingModel viewingModel)
+        public async Task<IActionResult> Create756Aa([Bind("ViewingModelId,StartTime,AvaibleSeats,TotalSeats,TheaterModelId,MovieModelId")] ViewingModel viewingModel)
         {
             if (ModelState.IsValid)
             {
@@ -103,63 +95,8 @@ namespace Berras_Bio_Lab1.Controllers
             return View(viewingModel);
         }
 
-        // GET: Viewing/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var viewingModel = await _context.Viewings.FindAsync(id);
-            if (viewingModel == null)
-            {
-                return NotFound();
-            }
-            ViewData["MovieModelId"] = new SelectList(_context.Movies, "MovieModelId", "Category", viewingModel.MovieModelId);
-            ViewData["TheaterModelId"] = new SelectList(_context.Theaters, "TheaterModelId", "Name", viewingModel.TheaterModelId);
-            return View(viewingModel);
-        }
-
-        // POST: Viewing/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ViewingModelId,StartTime,AvaibleSeats,TotalSeats,TheaterModelId,MovieModelId")] ViewingModel viewingModel)
-        {
-            if (id != viewingModel.ViewingModelId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(viewingModel);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ViewingModelExists(viewingModel.ViewingModelId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["MovieModelId"] = new SelectList(_context.Movies, "MovieModelId", "Category", viewingModel.MovieModelId);
-            ViewData["TheaterModelId"] = new SelectList(_context.Theaters, "TheaterModelId", "Name", viewingModel.TheaterModelId);
-            return View(viewingModel);
-        }
-
-        // GET: Viewing/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: Viewing/Delete756Aa/5
+        public async Task<IActionResult> Delete756Aa(int? id)
         {
             if (id == null)
             {
@@ -178,10 +115,10 @@ namespace Berras_Bio_Lab1.Controllers
             return View(viewingModel);
         }
 
-        // POST: Viewing/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: Viewing/Delete756Aa/5
+        [HttpPost, ActionName("Delete756Aa")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed756Aa(int id)
         {
             var viewingModel = await _context.Viewings.FindAsync(id);
             _context.Viewings.Remove(viewingModel);
@@ -189,9 +126,5 @@ namespace Berras_Bio_Lab1.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ViewingModelExists(int id)
-        {
-            return _context.Viewings.Any(e => e.ViewingModelId == id);
-        }
     }
 }
