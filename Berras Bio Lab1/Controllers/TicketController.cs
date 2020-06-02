@@ -33,11 +33,9 @@ namespace Berras_Bio_Lab1.Controllers
                 return NotFound();
             }
 
-            var viewingModel = await _context.Viewings.FirstOrDefaultAsync(v => v.ViewingModelId == id);
+            var viewingModel = await _context.Viewings.Include(v => v.Theater).Include(v => v.Movie).FirstOrDefaultAsync(v => v.ViewingModelId == id);
 
-            viewingModel.Movie = await _context.Movies.FirstOrDefaultAsync(m => m.MovieModelId == viewingModel.MovieModelId);
 
-            viewingModel.Theater = await _context.Theaters.FirstOrDefaultAsync(t => t.TheaterModelId == viewingModel.TheaterModelId);
 
             //Quickfix to be able to send a ticketmodel to view, personname and phonenumber is required //TO:DO fix call via attributes.
 
@@ -119,6 +117,7 @@ namespace Berras_Bio_Lab1.Controllers
             ticket.Viewing.Theater = await _context.Theaters.FirstOrDefaultAsync(t => t.TheaterModelId == viewing.TheaterModelId);
 
             ticket.OrderDateTime = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
 
             return View(ticket);
         }
