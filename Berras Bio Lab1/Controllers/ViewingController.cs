@@ -22,29 +22,26 @@ namespace Berras_Bio_Lab1.Controllers
         // GET: Viewing
         public async Task<IActionResult> Index()
         {
-            var berrasBioDbContext = _context.Viewings.Where(v => v.StartTime.Date == DateTime.Today).Include(v => v.Movie).Include(v => v.Theater);
-            var berrasBioDbContextList = await berrasBioDbContext.ToListAsync();
+            var viewingsList = await _context.Viewings.Where(v => v.StartTime.Date == DateTime.Today).Include(v => v.Movie).Include(v => v.Theater).ToListAsync();
 
-
-            return View(berrasBioDbContextList.OrderBy(v => v.StartTime).ToList());
+            return View(viewingsList.OrderBy(v => v.StartTime).ToList());
         }
 
         [HttpPost]
         public async Task<IActionResult> Index(string SortButton)
         {
-            var berrasBioDbContext = _context.Viewings.Where(v => v.StartTime.Date == DateTime.Today).Include(v => v.Movie).Include(v => v.Theater);
-            var berrasBioDbContextList = await berrasBioDbContext.ToListAsync();
+            var viewings = await _context.Viewings.Where(v => v.StartTime.Date == DateTime.Today).Include(v => v.Movie).Include(v => v.Theater).ToListAsync();
 
             if (SortButton == "Start time")
             {
-                berrasBioDbContextList = berrasBioDbContextList.OrderBy(v => v.StartTime).ToList();
+                viewings = viewings.OrderBy(v => v.StartTime).ToList();
             }
             else if (SortButton == "Avaible seats")
             {
-                berrasBioDbContextList = berrasBioDbContextList.OrderByDescending(v => v.AvaibleSeats).ThenBy(v => v.StartTime).ToList();
+                viewings = viewings.OrderByDescending(v => v.AvaibleSeats).ThenBy(v => v.StartTime).ToList();
             }
 
-            return View(berrasBioDbContextList);
+            return View(viewings);
         }
 
 
@@ -70,6 +67,7 @@ namespace Berras_Bio_Lab1.Controllers
         }
 
         // GET: Viewing/Create756Aa
+        // Only for development purposes
         public IActionResult Create756Aa()
         {
             ViewData["MovieModelId"] = new SelectList(_context.Movies, "MovieModelId", "Name");
@@ -78,8 +76,7 @@ namespace Berras_Bio_Lab1.Controllers
         }
 
         // POST: Viewing/Create756Aa
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Only for development purposes
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create756Aa([Bind("ViewingModelId,StartTime,AvaibleSeats,TotalSeats,TheaterModelId,MovieModelId")] ViewingModel viewingModel)
@@ -96,6 +93,7 @@ namespace Berras_Bio_Lab1.Controllers
         }
 
         // GET: Viewing/Delete756Aa/5
+        // Only for development purposes
         public async Task<IActionResult> Delete756Aa(int? id)
         {
             if (id == null)
@@ -116,6 +114,7 @@ namespace Berras_Bio_Lab1.Controllers
         }
 
         // POST: Viewing/Delete756Aa/5
+        // Only for development purposes
         [HttpPost, ActionName("Delete756Aa")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed756Aa(int id)

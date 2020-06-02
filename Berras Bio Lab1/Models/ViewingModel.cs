@@ -16,7 +16,6 @@ namespace Berras_Bio_Lab1.Models
         public int AvaibleSeats { get; set; }
         [Required]
         public int TotalSeats { get; set; }
-        public bool IsShowing { get; set; }
 
         public int? TheaterModelId { get; set; }
         public TheaterModel Theater { get; set; }

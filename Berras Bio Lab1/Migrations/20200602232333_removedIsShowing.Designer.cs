@@ -4,14 +4,16 @@ using Berras_Bio_Lab1.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Berras_Bio_Lab1.Migrations
 {
     [DbContext(typeof(BerrasBioDbContext))]
-    partial class BerrasBioDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200602232333_removedIsShowing")]
+    partial class removedIsShowing
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -35,8 +35,6 @@ namespace Berras_Bio_Lab1.Controllers
 
             var viewingModel = await _context.Viewings.Include(v => v.Theater).Include(v => v.Movie).FirstOrDefaultAsync(v => v.ViewingModelId == id);
 
-
-
             //Quickfix to be able to send a ticketmodel to view, personname and phonenumber is required //TO:DO fix call via attributes.
 
             var ticket = new TicketModel
@@ -74,9 +72,9 @@ namespace Berras_Bio_Lab1.Controllers
             ticket.PersonName = nameInBooking;
             ticket.PhoneNumber = phoneNumberInBooking;
 
-            var viewing = await _context.Viewings.FirstOrDefaultAsync(v => v.ViewingModelId == ticket.ViewingModelId);
+            var viewing = await _context.Viewings.Where(v => v.ViewingModelId == ticket.ViewingModelId).Include(v => v.Movie).Include(v => v.Theater).FirstOrDefaultAsync() ;
 
-
+            //Failsafe handling if a customer enters invalid number of tickets, or no firstname or phonenumber
             if (viewing.AvaibleSeats - ticket.NumberOfViewingTickets < 0)
             {
 
@@ -91,7 +89,7 @@ namespace Berras_Bio_Lab1.Controllers
                 return Redirect($"OrderTicket/{viewing.ViewingModelId}");
             }
 
-            if (ticket.NumberOfViewingTickets == 0)
+            if (ticket.NumberOfViewingTickets <= 0)
             {
                 return Redirect($"OrderTicket/{viewing.ViewingModelId}");
             }
@@ -113,8 +111,6 @@ namespace Berras_Bio_Lab1.Controllers
 
             ticket.Viewing = viewing;
 
-            ticket.Viewing.Movie = await _context.Movies.FirstOrDefaultAsync(m => m.MovieModelId == viewing.MovieModelId);
-            ticket.Viewing.Theater = await _context.Theaters.FirstOrDefaultAsync(t => t.TheaterModelId == viewing.TheaterModelId);
 
             ticket.OrderDateTime = DateTime.UtcNow;
             await _context.SaveChangesAsync();
