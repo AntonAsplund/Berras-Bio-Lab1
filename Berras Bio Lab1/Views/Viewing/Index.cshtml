@@ -57,7 +57,9 @@
             </td>
             <td>
                 <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@item.ViewingModelId">Details</a> 
+                @if (item.StartTime > DateTime.UtcNow && item.AvaibleSeats > 0) {
                 <a class="btn btn-info btn-sm" asp-controller="Ticket" asp-action="OrderTicket" asp-route-id="@item.ViewingModelId">Book tickets</a>
+                }
             </td>
 
         </tr>

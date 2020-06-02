@@ -59,6 +59,7 @@ namespace Berras_Bio_Lab1
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }
