@@ -1,0 +1,8 @@
+DELETE FROM Tickets
+
+DELETE FROM Viewings
+
+DELETE FROM Movies
+
+DELETE FROM Theaters
+

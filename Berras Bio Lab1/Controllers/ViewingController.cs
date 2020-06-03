@@ -77,64 +77,64 @@ namespace Berras_Bio_Lab1.Controllers
             return View(viewingModel);
         }
 
-        // GET: Viewing/Create756Aa
-        // Only for development purposes
-        public IActionResult Create756Aa()
-        {
-            ViewData["MovieModelId"] = new SelectList(_context.Movies, "MovieModelId", "Name");
-            ViewData["TheaterModelId"] = new SelectList(_context.Theaters, "TheaterModelId", "Name");
-            return View();
-        }
+        //// GET: Viewing/Create756Aa
+        //// Only for development purposes
+        //public IActionResult Create756Aa()
+        //{
+        //    ViewData["MovieModelId"] = new SelectList(_context.Movies, "MovieModelId", "Name");
+        //    ViewData["TheaterModelId"] = new SelectList(_context.Theaters, "TheaterModelId", "Name");
+        //    return View();
+        //}
 
-        // POST: Viewing/Create756Aa
-        // Only for development purposes
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create756Aa([Bind("ViewingModelId,StartTime,AvaibleSeats,TotalSeats,TheaterModelId,MovieModelId")] ViewingModel viewingModel)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(viewingModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["MovieModelId"] = new SelectList(_context.Movies, "MovieModelId", "Category", viewingModel.MovieModelId);
-            ViewData["TheaterModelId"] = new SelectList(_context.Theaters, "TheaterModelId", "Name", viewingModel.TheaterModelId);
-            return View(viewingModel);
-        }
+        //// POST: Viewing/Create756Aa
+        //// Only for development purposes
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create756Aa([Bind("ViewingModelId,StartTime,AvaibleSeats,TotalSeats,TheaterModelId,MovieModelId")] ViewingModel viewingModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(viewingModel);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["MovieModelId"] = new SelectList(_context.Movies, "MovieModelId", "Category", viewingModel.MovieModelId);
+        //    ViewData["TheaterModelId"] = new SelectList(_context.Theaters, "TheaterModelId", "Name", viewingModel.TheaterModelId);
+        //    return View(viewingModel);
+        //}
 
-        // GET: Viewing/Delete756Aa/5
-        // Only for development purposes
-        public async Task<IActionResult> Delete756Aa(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //// GET: Viewing/Delete756Aa/5
+        //// Only for development purposes
+        //public async Task<IActionResult> Delete756Aa(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var viewingModel = await _context.Viewings
-                .Include(v => v.Movie)
-                .Include(v => v.Theater)
-                .FirstOrDefaultAsync(m => m.ViewingModelId == id);
-            if (viewingModel == null)
-            {
-                return NotFound();
-            }
+        //    var viewingModel = await _context.Viewings
+        //        .Include(v => v.Movie)
+        //        .Include(v => v.Theater)
+        //        .FirstOrDefaultAsync(m => m.ViewingModelId == id);
+        //    if (viewingModel == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(viewingModel);
-        }
+        //    return View(viewingModel);
+        //}
 
-        // POST: Viewing/Delete756Aa/5
-        // Only for development purposes
-        [HttpPost, ActionName("Delete756Aa")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed756Aa(int id)
-        {
-            var viewingModel = await _context.Viewings.FindAsync(id);
-            _context.Viewings.Remove(viewingModel);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        //// POST: Viewing/Delete756Aa/5
+        //// Only for development purposes
+        //[HttpPost, ActionName("Delete756Aa")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed756Aa(int id)
+        //{
+        //    var viewingModel = await _context.Viewings.FindAsync(id);
+        //    _context.Viewings.Remove(viewingModel);
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
     }
 }

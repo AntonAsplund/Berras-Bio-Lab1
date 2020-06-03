@@ -28,7 +28,6 @@ namespace Berras_Bio_Lab1
             
             services.AddDbContextPool<BerrasBioDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BerrasBioDb")));
 
-            //services.AddScoped<SqlBerrasBioData>();
 
             services.AddControllersWithViews();
         }
