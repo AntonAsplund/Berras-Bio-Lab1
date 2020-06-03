@@ -8,6 +8,6 @@ Jag kör inte local db utan sqlexpress. Men programmet är skriven med "code first
 2. Kör en "update-database" i package manager console.
 3. Kör script "Add data to database".
 4. Testa på!
+5. Finns behov av att rensa databasen finns script för de i denna mapp ocskå. ("Rmove all data from database")
 
-I mappen som denna README fil ligger i så finns också ett script för att lägga till data i servern.
 
