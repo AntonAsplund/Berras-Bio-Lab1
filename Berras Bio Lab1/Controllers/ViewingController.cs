@@ -22,7 +22,11 @@ namespace Berras_Bio_Lab1.Controllers
         // GET: Viewing
         public async Task<IActionResult> Index()
         {
-            var viewingsList = await _context.Viewings.Where(v => v.StartTime.Date == DateTime.Today).Include(v => v.Movie).Include(v => v.Theater).ToListAsync();
+            var viewingsList = await _context.Viewings
+                .Where(v => v.StartTime.Date == DateTime.Today)
+                .Include(v => v.Movie)
+                .Include(v => v.Theater)
+                .ToListAsync();
 
             return View(viewingsList.OrderBy(v => v.StartTime).ToList());
         }
@@ -30,7 +34,11 @@ namespace Berras_Bio_Lab1.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(string SortButton)
         {
-            var viewings = await _context.Viewings.Where(v => v.StartTime.Date == DateTime.Today).Include(v => v.Movie).Include(v => v.Theater).ToListAsync();
+            var viewings = await _context.Viewings
+                .Where(v => v.StartTime.Date == DateTime.Today)
+                .Include(v => v.Movie)
+                .Include(v => v.Theater)
+                .ToListAsync();
 
             if (SortButton == "Start time")
             {
@@ -38,7 +46,10 @@ namespace Berras_Bio_Lab1.Controllers
             }
             else if (SortButton == "Avaible seats")
             {
-                viewings = viewings.OrderByDescending(v => v.AvaibleSeats).ThenBy(v => v.StartTime).ToList();
+                viewings = viewings
+                    .OrderByDescending(v => v.AvaibleSeats)
+                    .ThenBy(v => v.StartTime)
+                    .ToList();
             }
 
             return View(viewings);

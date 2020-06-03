@@ -22,7 +22,9 @@ namespace Berras_Bio_Lab1.Controllers
         // GET: Ticket
         public async Task<IActionResult> Index()
         {
-            var berrasBioDbContext = _context.Tickets.Include(t => t.Viewing);
+            var berrasBioDbContext = _context.Tickets
+                .Include(t => t.Viewing);
+
             return View(await berrasBioDbContext.ToListAsync());
         }
 
@@ -33,7 +35,10 @@ namespace Berras_Bio_Lab1.Controllers
                 return NotFound();
             }
 
-            var viewingModel = await _context.Viewings.Include(v => v.Theater).Include(v => v.Movie).FirstOrDefaultAsync(v => v.ViewingModelId == id);
+            var viewingModel = await _context.Viewings
+                .Include(v => v.Theater)
+                .Include(v => v.Movie)
+                .FirstOrDefaultAsync(v => v.ViewingModelId == id);
 
             //Quickfix to be able to send a ticketmodel to view, personname and phonenumber is required //TO:DO fix call via attributes.
 
@@ -72,7 +77,10 @@ namespace Berras_Bio_Lab1.Controllers
             ticket.PersonName = nameInBooking;
             ticket.PhoneNumber = phoneNumberInBooking;
 
-            var viewing = await _context.Viewings.Where(v => v.ViewingModelId == ticket.ViewingModelId).Include(v => v.Movie).Include(v => v.Theater).FirstOrDefaultAsync() ;
+            var viewing = await _context.Viewings
+                .Where(v => v.ViewingModelId == ticket.ViewingModelId)
+                .Include(v => v.Movie).Include(v => v.Theater)
+                .FirstOrDefaultAsync();
 
             //Failsafe handling if a customer enters invalid number of tickets, or no firstname or phonenumber
             if (viewing.AvaibleSeats - ticket.NumberOfViewingTickets < 0)
