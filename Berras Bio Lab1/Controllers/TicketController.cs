@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Berras_Bio_Lab1.Models;
+using Berras_Bio_Lab1.Repository;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Berras_Bio_Lab1.Models;
-using Berras_Bio_Lab1.Repository;
 
 namespace Berras_Bio_Lab1.Controllers
 {
@@ -55,11 +53,14 @@ namespace Berras_Bio_Lab1.Controllers
             ticket.PersonName = "";
             ticket.PhoneNumber = "";
 
+
             return View(ticket);
         }
 
+
+
         [HttpPost]
-        public async Task<IActionResult> OrderTicketValidation(TicketModel ticket)
+        public async Task<IActionResult> OrderTicket(TicketModel ticket)
         {
             
 
@@ -83,35 +84,17 @@ namespace Berras_Bio_Lab1.Controllers
                 .FirstOrDefaultAsync();
 
             //Failsafe handling if a customer enters invalid number of tickets, or no firstname or phonenumber
+            
+            if (ticket.NumberOfViewingTickets <= 0 || ticket.PhoneNumber == null || ticket.PhoneNumber == "" || ticket.PersonName == null || ticket.PersonName == "" || ticket.NumberOfViewingTickets > 12)
+            {
+                return View(ticket);
+            }
+
             if (viewing.AvaibleSeats - ticket.NumberOfViewingTickets < 0)
             {
 
                 TempData["TicketLimitation"] = "Not enough seats are avaible";
-                return Redirect($"OrderTicket/{viewing.ViewingModelId}");
-            }
-
-            if (ticket.NumberOfViewingTickets > 12)
-            {
-
-                TempData["TicketLimitation"] = "No more than 12 tickets are allowed per person";
-                return Redirect($"OrderTicket/{viewing.ViewingModelId}");
-            }
-
-            if (ticket.NumberOfViewingTickets <= 0)
-            {
-                return Redirect($"OrderTicket/{viewing.ViewingModelId}");
-            }
-
-            if (ticket.PersonName == null || ticket.PersonName == "")
-            {
-                TempData["TicketLimitation"] = "A name must be entered";
-                return Redirect($"OrderTicket/{viewing.ViewingModelId}");
-            }
-
-            if (ticket.PhoneNumber == null || ticket.PhoneNumber == "")
-            {
-                TempData["TicketLimitation"] = "A phonenumber must be entered";
-                return Redirect($"OrderTicket/{viewing.ViewingModelId}");
+                return View(ticket);
             }
 
             viewing.AvaibleSeats -= ticket.NumberOfViewingTickets;
@@ -120,10 +103,88 @@ namespace Berras_Bio_Lab1.Controllers
             ticket.Viewing = viewing;
 
 
-            ticket.OrderDateTime = DateTime.UtcNow;
+            ticket.OrderDateTime = DateTime.Now;
             await _context.SaveChangesAsync();
+
+            return RedirectToAction("OrderTicketValidation", ticket);
+        }
+
+        public async Task<IActionResult> OrderTicketValidation(TicketModel ticket)
+        {
+            ticket.Viewing = await _context.Viewings
+                .Where(v => v.ViewingModelId == ticket.ViewingModelId)
+                .Include(v => v.Movie).Include(v => v.Theater)
+                .FirstOrDefaultAsync();
 
             return View(ticket);
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> OrderTicketValidation(TicketModel ticket)
+        //{
+
+
+        //    var ticketsInBooking = ticket.NumberOfViewingTickets;
+        //    var nameInBooking = ticket.PersonName;
+        //    var phoneNumberInBooking = ticket.PhoneNumber;
+
+        //    if (ticket == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    ticket = await _context.Tickets.FirstOrDefaultAsync(t => t.TicketModelId == ticket.TicketModelId);
+        //    ticket.NumberOfViewingTickets = ticketsInBooking;
+        //    ticket.PersonName = nameInBooking;
+        //    ticket.PhoneNumber = phoneNumberInBooking;
+
+        //    var viewing = await _context.Viewings
+        //        .Where(v => v.ViewingModelId == ticket.ViewingModelId)
+        //        .Include(v => v.Movie).Include(v => v.Theater)
+        //        .FirstOrDefaultAsync();
+
+        //    //Failsafe handling if a customer enters invalid number of tickets, or no firstname or phonenumber
+        //    if (viewing.AvaibleSeats - ticket.NumberOfViewingTickets < 0)
+        //    {
+
+        //        TempData["TicketLimitation"] = "Not enough seats are avaible";
+        //        return Redirect($"OrderTicket/{viewing.ViewingModelId}");
+        //    }
+
+        //    if (ticket.NumberOfViewingTickets > 12)
+        //    {
+
+        //        TempData["TicketLimitation"] = "No more than 12 tickets are allowed per person";
+        //        return Redirect($"OrderTicket/{viewing.ViewingModelId}");
+        //    }
+
+        //    if (ticket.NumberOfViewingTickets <= 0)
+        //    {
+        //        return Redirect($"OrderTicket/{viewing.ViewingModelId}");
+        //    }
+
+        //    if (ticket.PersonName == null || ticket.PersonName == "")
+        //    {
+        //        TempData["TicketLimitation"] = "A name must be entered";
+        //        return Redirect($"OrderTicket/{viewing.ViewingModelId}");
+        //    }
+
+        //    if (ticket.PhoneNumber == null || ticket.PhoneNumber == "")
+        //    {
+        //        TempData["TicketLimitation"] = "A phonenumber must be entered";
+        //        return Redirect($"OrderTicket/{viewing.ViewingModelId}");
+        //    }
+
+        //    viewing.AvaibleSeats -= ticket.NumberOfViewingTickets;
+        //    await _context.SaveChangesAsync();
+
+        //    ticket.Viewing = viewing;
+
+
+        //    ticket.OrderDateTime = DateTime.UtcNow;
+        //    await _context.SaveChangesAsync();
+
+        //    return View({ticket});
+        //}
     }
 }
